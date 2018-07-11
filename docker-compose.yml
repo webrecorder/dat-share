@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  redis:
+    image: "redis:4.0.10"
+    sysctls:
+        net.core.somaxconn: 1024
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis:/data
