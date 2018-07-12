@@ -1012,6 +1012,14 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
+
+dotenv@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -1219,6 +1227,10 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
+eventemitter3@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
+
 execa@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
@@ -1323,6 +1335,15 @@ fastify-boom@^0.1.0:
     boom "^7.1.1"
     fastify-plugin "^0.2.2"
 
+fastify-env@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/fastify-env/-/fastify-env-0.6.0.tgz#aafc3b43bb8e13eef2385f82b4cbf6d7e4ecb224"
+  dependencies:
+    ajv "^6.5.0"
+    dotenv "5.0.1"
+    fastify-plugin "^1.0.1"
+    xtend "^4.0.1"
+
 fastify-graceful-shutdown@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/fastify-graceful-shutdown/-/fastify-graceful-shutdown-2.0.0.tgz#23c1cd3bc9c27912aaf5e5dfbe0339d91338e8c3"
@@ -1341,6 +1362,12 @@ fastify-plugin@^0.2.2:
   resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-0.2.2.tgz#e01b67685fd02e87edc98670ce2acfe251a2c715"
   dependencies:
     semver "^5.4.1"
+
+fastify-plugin@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-1.2.0.tgz#b87274ad9d14e41efcd3240c64f5dee4c39b2154"
+  dependencies:
+    semver "^5.5.0"
 
 fastify-redis@^1.0.0:
   version "1.0.0"

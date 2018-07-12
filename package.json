@@ -9,6 +9,8 @@
     "dat": "^13.11.3",
     "dat-encoding": "^5.0.1",
     "dat-node": "^3.5.11",
+    "dotenv": "^6.0.0",
+    "eventemitter3": "^3.1.0",
     "fastify": "^1.8.0",
     "fastify-boom": "^0.1.0",
     "fastify-graceful-shutdown": "^2.0.0",

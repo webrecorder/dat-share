@@ -1,6 +1,8 @@
+const dotenv = require('dotenv')
+dotenv.load()
 const fastify = require('./lib/server')
 
-;(async () => {
+const start = async () => {
   try {
     await fastify.listen(3000)
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
@@ -8,6 +10,6 @@ const fastify = require('./lib/server')
     fastify.log.error(err)
     process.exit(1)
   }
-})()
+}
 
-
+start()
