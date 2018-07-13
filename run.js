@@ -1,5 +1,3 @@
-const dotenv = require('dotenv')
-dotenv.load()
 const fastify = require('./lib/server')
 
 const start = async () => {
