@@ -1,5 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
-### JetBrains template
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -52,14 +59,7 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
-### Example user template template
-### Example user template
-
-# IntelliJ project files
-.idea
-*.iml
-out
-gen### Node template
+### Node template
 # Logs
 logs
 *.log
@@ -122,6 +122,9 @@ typings/
 # next.js build output
 .next
 
-redis/dump.rdb
-data
-dbDir
+data/
+.eslintrc.json
+.gitignore
+.prettierrc
+datTracker.db
+docker-compose.yml

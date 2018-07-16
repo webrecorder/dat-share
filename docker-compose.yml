@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  redis:
-    image: "redis:4.0.10"
-    sysctls:
-        net.core.somaxconn: 1024
+  dat-share:
+    build: .
     ports:
-      - "6379:6379"
+      - "3282:3282"
+      - "3000:3000"
     volumes:
-      - ./redis:/data
+      - ./data/storage:/data
+      - ./dbDir:/datDB
