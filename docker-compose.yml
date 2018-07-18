@@ -8,4 +8,3 @@ services:
       - "3000:3000"
     volumes:
       - ./data/storage:/data
-      - ./dbDir:/datDB

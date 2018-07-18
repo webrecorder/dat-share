@@ -1,11 +1,9 @@
 FROM node:10.6.0
 
 VOLUME /data
-VOLUME /datDB
 
 ENV ROOT_DIR /data
 ENV SWARM_PORT 3282
-ENV DB_DIR /datDB
 ENV NODE_ENV production
 ENV DEBUG "SwarmManager"
 
