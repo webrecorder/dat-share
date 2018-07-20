@@ -51,6 +51,6 @@
     "format": "prettier --write 'lib/**/*.js'",
     "lint": "eslint lib/**/*.js",
     "start": "node run.js",
-    "test": "TEST=1 ava test/test-datShare.js"
+    "test": "TEST=1 ava --serial"
   }
 }
