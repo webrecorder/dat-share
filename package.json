@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "append-tree": "^2.4.4",
-    "aws-sdk": "^2.278.1",
+    "aws-sdk": "^2.280.1",
     "boom": "^7.2.0",
     "cors": "^2.8.4",
     "dat": "^13.11.3",
@@ -20,7 +20,7 @@
     "discovery-server": "^1.1.0",
     "discovery-swarm": "^5.1.2",
     "eventemitter3": "^3.1.0",
-    "fastify": "^1.8.0",
+    "fastify": "^1.9.0",
     "fastify-boom": "^0.1.0",
     "fastify-graceful-shutdown": "^2.0.0",
     "fastify-plugin": "^1.2.0",
@@ -36,10 +36,10 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
-    "@types/node": "^10.5.2",
+    "@types/node": "^10.5.3",
     "ava": "^1.0.0-beta.6",
     "babel-eslint": "^8.2.6",
-    "eslint": "^5.1.0",
+    "eslint": "^5.2.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "prettier": "^1.13.7",
@@ -48,9 +48,9 @@
     "request-promise": "^4.2.2"
   },
   "scripts": {
-    "format": "prettier --write 'lib/**/*.js'",
-    "lint": "eslint lib/**/*.js",
+    "format": "prettier --write 'lib/**/*.js' 'test/**/*.js'",
+    "lint": "eslint lib test",
     "start": "node run.js",
-    "test": "TEST=1 ava --serial"
+    "test": "ava --serial"
   }
 }
