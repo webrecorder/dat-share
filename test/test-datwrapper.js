@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as fs from 'fs-extra'
 import path from 'path'
-import { DatWrapperContext } from './helpers'
+import { TestContext } from './helpers'
 import DW from '../lib/dat/datWrapper'
 
 test.before(t => {
-  t.context = new DatWrapperContext()
+  t.context = new TestContext()
 })
 
 test('DatWrapper.from should throw an error if no arguments are supplied', async t => {
