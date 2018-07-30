@@ -18,5 +18,9 @@ RUN yarn install
 
 COPY . /usr/src/app
 
+#RUN useradd -ms /bin/bash -u 1000 datuser
+
+USER node
+
 CMD ["node", "run.js"]
 
