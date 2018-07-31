@@ -2,7 +2,7 @@ import test from 'ava'
 import * as fs from 'fs-extra'
 import path from 'path'
 import { TestContext } from './helpers'
-import { SwarmManager } from '../lib/dat/swarmManager'
+import SwarmManager from '../lib/dat/swarmManager'
 
 test.beforeEach(t => {
   t.context = new TestContext()
