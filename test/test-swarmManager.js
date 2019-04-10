@@ -215,7 +215,7 @@ test.serial(
 
     const dirP = swarmMan.actualDirPath(context.dir1);
     t.true(
-      swarmMan.isActiveDir(dirP),
+      swarmMan.isActiveDir(context.dir1),
       "Once a directory is init'd, isActiveDir should return true"
     );
     t.is(
@@ -235,11 +235,11 @@ test.serial(
       "Once a directory is init'd, getDat should return the dat associated with the directory"
     );
     t.true(
-      swarmMan.getDatForDir(dirP) === dat,
+      swarmMan.getDatForDir(context.dir1) === dat,
       "Once a directory is init'd, the dat retrieved using getDatForDir, should match the dat returned from getDat"
     );
     t.true(
-      swarmMan.getDiscoveryKeyForDir(dirP) === datInfo.discoveryKey,
+      swarmMan.getDiscoveryKeyForDir(context.dir1) === datInfo.discoveryKey,
       "Once a directory is init'd, the discovery key returned by getDiscoveryKeyForDir should match the datInfo's"
     );
     t.true(
@@ -455,15 +455,10 @@ test.serial('SwarmManager should sync directories correctly', async t => {
   );
 
   const { dir, discoveryKey, datKey } = results[0];
-  t.is(
-    dir,
-    context.dir2,
-    'the dir from sync results should be the same as the one supplied to sync'
-  );
   t.is(swarmMan.numDats(), 1, 'after sync numDats should be 1');
   t.is(swarmMan.numSharing(), 1, 'after sync numSharing should be 1');
 
-  const sharedDat = swarmMan.getDatForDir(dir);
+  const sharedDat = swarmMan.getDatForDir(context.dir2);
   t.is(
     discoveryKey,
     sharedDat.discoveryKey('hex'),
@@ -525,7 +520,7 @@ test.serial('SwarmManager should sync directories correctly', async t => {
     'After unsharing a directory numSharing should be 0'
   );
   t.false(
-    swarmMan.isActiveDir(swarmMan.actualDirPath(context.dir2)),
+    swarmMan.isActiveDir(context.dir2),
     'After unsharing a directory isActiveDir should return false for the unshared dir'
   );
   clearTimeout(tTO);

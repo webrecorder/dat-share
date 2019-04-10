@@ -1,4 +1,4 @@
-FROM node:10.6.0
+FROM node:11.13.0
 
 VOLUME /data
 
