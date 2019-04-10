@@ -1,17 +1,14 @@
-const fastify = require('./lib/server')
+const util = require('util');
+const config = require('./lib/config');
+const initServer = require('./lib/initServer');
 
-const start = async () => {
-  const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1'
-  try {
-    const address = await fastify.listen(3000, host)
-    console.log('server listening')
-    console.log(address)
-    console.log(fastify.printRoutes())
-  } catch (err) {
-    console.error(err)
-    fastify.log.error(err)
-    process.exit(1)
-  }
-}
+console.log(
+  `Dat Share API server starting with config\n${util.inspect(config, {
+    depth: null,
+    compact: false,
+  })}`
+);
 
-start()
+initServer(config).then(error => {
+  console.error(error);
+});

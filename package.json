@@ -25,6 +25,8 @@
   "dependencies": {
     "aws-sdk": "^2.437.0",
     "boom": "^7.3.0",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
     "cors": "^2.8.5",
     "dat": "^13.12.2",
     "dat-encoding": "^5.0.1",
@@ -62,6 +64,6 @@
     "format": "prettier --write 'lib/**/*.js' 'test/**/*.js'",
     "lint": "eslint lib test",
     "start": "node run.js",
-    "test": "DEBUG=SwarmManager ava --verbose -c 1 --serial"
+    "test": "ava --verbose -c 1 --serial"
   }
 }

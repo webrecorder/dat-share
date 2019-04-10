@@ -2,13 +2,18 @@ import * as cp from 'child_process';
 import path from 'path';
 import EventEmitter from 'eventemitter3';
 import * as fs from 'fs-extra';
-import getServer from '../../lib/server';
+import serverConfig from '../../lib/config';
+import getServer from '../../lib/initServer';
 
 export default class TestContext extends EventEmitter {
   constructor() {
     super();
     this.swarmPort = 3282;
     this.rootDir = path.resolve(__dirname, '../fixtures/swarmMan');
+    this.smConfig = {
+      port: 3280,
+      rootDir: this.rootDir,
+    };
     this.dir1 = 'd1';
     this.dir2 = 'd2';
     this.notUnderRoot = 'notUnderRoot';
@@ -78,7 +83,8 @@ export default class TestContext extends EventEmitter {
   }
 
   async startServer() {
-    this.server = await getServer(this.rootDir, this.swarmPort);
+    serverConfig.swarmManager = this.smConfig;
+    this.server = await getServer(serverConfig);
     this.server.swarmManager.on('replicating', key =>
       this.emit('replicating', key)
     );
