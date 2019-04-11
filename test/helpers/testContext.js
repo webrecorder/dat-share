@@ -1,19 +1,38 @@
-import * as cp from 'child_process';
-import path from 'path';
-import EventEmitter from 'eventemitter3';
-import * as fs from 'fs-extra';
-import getServer from '../../lib/server';
+const cp = require('child_process');
+const path = require('path');
+const EventEmitter = require('eventemitter3');
+const fs = require('fs-extra');
+const config = require('../../lib/config');
+const initServer = require('../../lib/initServer');
 
-export default class TestContext extends EventEmitter {
+module.exports = class TestContext extends EventEmitter {
   constructor() {
     super();
-    this.swarmPort = 3282;
-    this.rootDir = path.resolve(__dirname, '../fixtures/swarmMan');
+    config.swarmManager.rootDir = path.join(
+      __dirname,
+      '..',
+      'fixtures',
+      'swarmMan'
+    );
+    config.swarmManager.port = 3282;
+    this._config = config;
     this.dir1 = 'd1';
     this.dir2 = 'd2';
     this.notUnderRoot = 'notUnderRoot';
     this.shouldCreateDir = 'idonotexist';
     this._cleanupables = [];
+  }
+
+  get rootDir() {
+    return this._config.swarmManager.rootDir;
+  }
+
+  get smConfig() {
+    return this._config.swarmManager;
+  }
+
+  get swarmPort() {
+    return this._config.swarmManager.port;
   }
 
   get dir1DatPath() {
@@ -78,7 +97,7 @@ export default class TestContext extends EventEmitter {
   }
 
   async startServer() {
-    this.server = await getServer(this.rootDir, this.swarmPort);
+    this.server = await initServer(config);
     this.server.swarmManager.on('replicating', key =>
       this.emit('replicating', key)
     );
@@ -172,4 +191,4 @@ export default class TestContext extends EventEmitter {
       });
     }
   }
-}
+};

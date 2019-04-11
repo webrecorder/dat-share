@@ -2,7 +2,7 @@ import test from 'ava';
 import * as fs from 'fs-extra';
 import path from 'path';
 import { TestContext } from './helpers';
-import SwarmManager from '../lib/dat/swarmManager';
+import SwarmManager from '../lib/swarmManager';
 
 test.beforeEach(t => {
   t.context = new TestContext();
@@ -14,45 +14,9 @@ test.afterEach.always(async t => {
   }
 });
 
-test('new SwarmManager() should throw an error if incorrect arguments are supplied', async t => {
-  let error = t.throws(
-    () => new SwarmManager(),
-    Error,
-    'Creating a new SwarmManger with no arguments should throw an exception'
-  );
-  t.is(
-    error.message,
-    'new SwarmManager(rootDir, port): both rootDir and port are undefined'
-  );
-
-  error = t.throws(
-    () => new SwarmManager(null, 1),
-    Error,
-    'Creating a new SwarmManger with only the port arguments should throw an exception'
-  );
-  t.is(error.message, 'new SwarmManager(rootDir, port): rootDir is undefined');
-
-  error = t.throws(
-    () => new SwarmManager(''),
-    Error,
-    'Creating a new SwarmManger with only the rootDir arguments should throw an exception'
-  );
-  t.is(error.message, 'new SwarmManager(rootDir, port): port is undefined');
-
-  error = t.throws(
-    () => new SwarmManager({}, 1),
-    Error,
-    'Creating a new SwarmManger with wrong type of rootDir arguments should throw an exception'
-  );
-  t.is(
-    error.message,
-    "new SwarmManager(rootDir, port): rootDir should be a 'string' received 'object'"
-  );
-});
-
 test('creating a new SwarmManager should not initialize dats or swarm', async t => {
   const { context } = t;
-  const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+  const swarmMan = new SwarmManager(context.smConfig);
   t.is(
     swarmMan.rootDir,
     context.rootDir,
@@ -60,7 +24,7 @@ test('creating a new SwarmManager should not initialize dats or swarm', async t 
   );
   t.is(
     swarmMan.port,
-    context.swarmPort,
+    context.smConfig.port,
     'the SwarmManager port should be equal to the value of swarmPort used to create it'
   );
   t.is(
@@ -105,7 +69,7 @@ test('creating a new SwarmManager should not initialize dats or swarm', async t 
 
 test('SwarmManager should indicate if it can share a directory if it exists under rootdir otherwise should indicate cant', async t => {
   const { context } = t;
-  const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+  const swarmMan = new SwarmManager(context.smConfig);
   t.true(
     await swarmMan.canShareDir(context.dir1),
     'should indicate ability to share a directory under rootdir'
@@ -122,7 +86,7 @@ test('SwarmManager should indicate if it can share a directory if it exists unde
 
 test('SwarmManager.actualDirPath should join the supplied path to the rootdir correctly', async t => {
   const { context } = t;
-  const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+  const swarmMan = new SwarmManager(context.smConfig);
 
   const fp1 = swarmMan.actualDirPath(context.dir1);
   t.true(
@@ -170,7 +134,7 @@ test.serial(
   'SwarmManager should not emit "listening" when the swarm is listening and "close" when the swarm closes',
   async t => {
     const { context } = t;
-    const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+    const swarmMan = new SwarmManager(context.smConfig);
 
     const listening = await new Promise((resolve, reject) => {
       swarmMan.initSwarm();
@@ -196,7 +160,7 @@ test.serial(
   async t => {
     const { context } = t;
     context.deferredDatCleanup(context.dir1);
-    const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+    const swarmMan = new SwarmManager(context.smConfig);
 
     const datInfo = await swarmMan.initDat(context.dir1);
     t.truthy(datInfo, 'The return value of initDat should be non-null');
@@ -215,7 +179,7 @@ test.serial(
 
     const dirP = swarmMan.actualDirPath(context.dir1);
     t.true(
-      swarmMan.isActiveDir(dirP),
+      swarmMan.isActiveDir(context.dir1),
       "Once a directory is init'd, isActiveDir should return true"
     );
     t.is(
@@ -235,11 +199,11 @@ test.serial(
       "Once a directory is init'd, getDat should return the dat associated with the directory"
     );
     t.true(
-      swarmMan.getDatForDir(dirP) === dat,
+      swarmMan.getDatForDir(context.dir1) === dat,
       "Once a directory is init'd, the dat retrieved using getDatForDir, should match the dat returned from getDat"
     );
     t.true(
-      swarmMan.getDiscoveryKeyForDir(dirP) === datInfo.discoveryKey,
+      swarmMan.getDiscoveryKeyForDir(context.dir1) === datInfo.discoveryKey,
       "Once a directory is init'd, the discovery key returned by getDiscoveryKeyForDir should match the datInfo's"
     );
     t.true(
@@ -296,7 +260,7 @@ test.serial(
   'SwarmManager should share and unshare a directory after it was inited',
   async t => {
     const { context } = t;
-    const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+    const swarmMan = new SwarmManager(context.smConfig);
     await context.startSwarmMan(swarmMan);
     const tTO = setTimeout(
       () =>
@@ -413,7 +377,7 @@ test.serial(
 
 test.serial('SwarmManager should sync directories correctly', async t => {
   const { context } = t;
-  const swarmMan = new SwarmManager(context.rootDir, context.swarmPort);
+  const swarmMan = new SwarmManager(context.smConfig);
   await context.startSwarmMan(swarmMan);
   const tTO = setTimeout(
     () => t.fail('SwarmMan sync failed to complete after 60 seconds'),
@@ -455,15 +419,10 @@ test.serial('SwarmManager should sync directories correctly', async t => {
   );
 
   const { dir, discoveryKey, datKey } = results[0];
-  t.is(
-    dir,
-    context.dir2,
-    'the dir from sync results should be the same as the one supplied to sync'
-  );
   t.is(swarmMan.numDats(), 1, 'after sync numDats should be 1');
   t.is(swarmMan.numSharing(), 1, 'after sync numSharing should be 1');
 
-  const sharedDat = swarmMan.getDatForDir(dir);
+  const sharedDat = swarmMan.getDatForDir(context.dir2);
   t.is(
     discoveryKey,
     sharedDat.discoveryKey('hex'),
@@ -525,7 +484,7 @@ test.serial('SwarmManager should sync directories correctly', async t => {
     'After unsharing a directory numSharing should be 0'
   );
   t.false(
-    swarmMan.isActiveDir(swarmMan.actualDirPath(context.dir2)),
+    swarmMan.isActiveDir(context.dir2),
     'After unsharing a directory isActiveDir should return false for the unshared dir'
   );
   clearTimeout(tTO);

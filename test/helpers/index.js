@@ -1,1 +1,1 @@
-export { default as TestContext } from './testContext';
+export TestContext from './testContext';
