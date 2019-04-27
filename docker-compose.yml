@@ -3,6 +3,7 @@ version: '3'
 services:
   dat-share:
     build: .
+    image: webrecorder/dat-share
     ports:
       - "3282:3282"
       - "3000:3000"

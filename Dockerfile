@@ -22,5 +22,5 @@ COPY . /usr/src/app
 
 USER node
 
-CMD ["node", "run.js"]
+CMD node run.js -r $ROOT_DIR -s $SWARM_PORT
 
